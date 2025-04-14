@@ -45,7 +45,7 @@ export default function Page() {
         <h3 className="col-span-full font-bold">Valori in Fattura</h3>
         <p className="text-base-content/60 col-span-full">
           Inserisci i valori che vuoi calcolare. Puoi inserire il totale lordo o il totale netto, e il calcolo verrà
-          fatto automaticamente.
+          fatto automaticamente
         </p>
         <NumberInput
           label="Totale Lordo"
