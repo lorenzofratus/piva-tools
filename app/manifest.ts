@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-export function manifest(): MetadataRoute.Manifest {
+export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "P.IVA Tools",
     short_name: "PIVA",
@@ -64,4 +64,4 @@ export function manifest(): MetadataRoute.Manifest {
   };
 }
 
-export default manifest;
+export const dynamic = "force-static";
