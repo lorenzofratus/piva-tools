@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/lorenzofratus/piva-tools">
-    <img src="app/icon0.svg" alt="Logo" width="80" height="80" style="border-radius: 1rem">
+    <img src="icon.svg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">P.IVA Tools</h3>
