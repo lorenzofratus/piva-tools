@@ -9,6 +9,19 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [...compat.extends("next/core-web-vitals", "next/typescript", "prettier")];
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
+  {
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          name: "clsx",
+          message: "Please import from `clsx/lite` instead.",
+        },
+      ],
+    },
+  },
+];
 
 export default eslintConfig;
