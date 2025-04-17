@@ -17,18 +17,19 @@ export default function Page() {
     setState((prev) => {
       const state = { ...prev, [key]: value };
       state.direction = key === "gross" ? "forward" : key === "net" ? "backward" : state.direction;
-      const aggregateRate = (state.baseRate / 100) * ((state.taxRate + state.inpsRate) / 100);
-      switch (state.direction) {
-        case "forward":
-          state.tax = state.gross * aggregateRate;
-          state.tax = Math.ceil(state.tax * 100) / 100;
-          state.net = state.gross - state.tax;
-          break;
-        case "backward":
-          state.tax = state.net * (aggregateRate / (1 - aggregateRate));
-          state.tax = Math.ceil(state.tax * 100) / 100;
-          state.gross = state.net + state.tax;
-          break;
+      const baseRate = state.baseRate / 100;
+      const inpsRate = state.inpsRate / 100;
+      const taxRate = state.taxRate / 100;
+      if (state.direction === "backward") {
+        const denom = 1 - baseRate * (inpsRate + (1 - inpsRate) * taxRate);
+        state.gross = Math.round((state.net / denom) * 100) / 100;
+      }
+      const inpsBase = state.gross * baseRate;
+      state.inps = Math.round(inpsBase * inpsRate * 100) / 100;
+      const taxBase = inpsBase - state.inps;
+      state.tax = Math.round(taxBase * taxRate * 100) / 100;
+      if (state.direction === "forward") {
+        state.net = state.gross - state.inps - state.tax;
       }
       return state;
     });
@@ -41,7 +42,7 @@ export default function Page() {
     <div className="w-full flex-1">
       <PageTitle title={name} subtitle={description} backHref="/" />
 
-      <div className="bg-base-200 rounded-box mt-8 grid grid-cols-3 gap-3 p-4 shadow-md max-sm:grid-cols-1">
+      <div className="bg-base-200 rounded-box mt-8 grid grid-cols-4 gap-3 p-4 shadow-md max-sm:grid-cols-1">
         <h3 className="col-span-full font-bold">Valori in Fattura</h3>
         <p className="text-base-content/60 col-span-full">
           Inserisci i valori che vuoi calcolare. Puoi inserire il totale lordo o il totale netto, e il calcolo verrà
@@ -54,7 +55,8 @@ export default function Page() {
           onChange={handleChange("gross")}
           inputClassName={grossClass}
         />
-        <NumberInput label="Totale Tasse" prefix="€" value={state.tax} onChange={handleChange("tax")} disabled />
+        <NumberInput label="Totale INPS" prefix="€" value={state.inps} onChange={handleChange("inps")} disabled />
+        <NumberInput label="Totale Imposte" prefix="€" value={state.tax} onChange={handleChange("tax")} disabled />
         <NumberInput
           label="Totale Netto"
           prefix="€"
@@ -82,9 +84,10 @@ export default function Page() {
 
 type State = {
   baseRate: number;
-  taxRate: number;
   inpsRate: number;
+  taxRate: number;
   gross: number;
+  inps: number;
   tax: number;
   net: number;
   direction: "forward" | "backward";
@@ -92,9 +95,10 @@ type State = {
 
 const defaultState: State = {
   baseRate: 78,
-  taxRate: 5,
   inpsRate: 26.07,
+  taxRate: 5,
   gross: 0,
+  inps: 0,
   tax: 0,
   net: 0,
   direction: "forward",
