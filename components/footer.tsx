@@ -9,7 +9,7 @@ type FooterProps = {
 const Footer = (props: FooterProps) => {
   const { className } = props;
 
-  const classString = clsx("p-3 text-sm text-base-content/60", className);
+  const classString = clsx("text-base-content/60 p-3 text-sm", className);
 
   return (
     <footer className={classString}>

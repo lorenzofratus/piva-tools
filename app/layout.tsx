@@ -1,4 +1,5 @@
 import Footer from "@components/footer";
+import clsx from "clsx/lite";
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
@@ -18,13 +19,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const classString = clsx("mx-auto flex min-h-screen max-w-screen-md flex-col", outfit.variable, "antialiased");
+
   return (
     <html lang="it">
-      <body className={`${outfit.variable} antialiased`}>
-        <main className="mx-auto flex min-h-screen max-w-screen-md flex-col">
-          <div className="flex flex-1 flex-col items-center justify-center p-4">{children}</div>
-          <Footer />
-        </main>
+      <body className={classString}>
+        <main className="flex flex-1 flex-col items-center justify-center p-4">{children}</main>
+        <Footer />
       </body>
     </html>
   );
