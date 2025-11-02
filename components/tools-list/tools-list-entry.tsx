@@ -16,18 +16,20 @@ const ToolsListEntry = (props: ToolsListEntryProps) => {
   const classString = clsx("list-row", className);
 
   return (
-    <li className={classString}>
-      <div className="avatar avatar-placeholder bg-primary/60 text-primary-content flex size-10 items-center justify-center rounded">
-        <HugeiconsIcon icon={icon} />
-      </div>
-      <div>
-        <div className="font-semibold">{name}</div>
-        <div className="text-xs opacity-60">{description}</div>
-      </div>
-      <Link href={url} className="btn btn-square btn-ghost">
-        <HugeiconsIcon icon={ArrowRightIcon} />
-      </Link>
-    </li>
+    <Link href={url}>
+      <li className={classString}>
+        <div className="avatar avatar-placeholder bg-primary/60 text-primary-content flex size-10 items-center justify-center rounded">
+          <HugeiconsIcon icon={icon} />
+        </div>
+        <div>
+          <div className="font-semibold">{name}</div>
+          <div className="text-xs opacity-60">{description}</div>
+        </div>
+        <div className="btn btn-square btn-ghost">
+          <HugeiconsIcon icon={ArrowRightIcon} />
+        </div>
+      </li>
+    </Link>
   );
 };
 
