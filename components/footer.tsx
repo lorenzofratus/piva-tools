@@ -1,3 +1,5 @@
+"use client";
+
 import { CopyrightIcon, GithubIcon, SourceCodeIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import clsx from "clsx/lite";
